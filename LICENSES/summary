@@ -1,0 +1,7 @@
+In addition to utilizing the codebase of libscapi, the following files were taken in part from repos owned by the Bar-Ilan crypto group this includes:
+
+TemplateField.{h,cpp}
+ZpKaratsuba.{h,cpp} <- not modified
+testVDM.hpp
+
+These come from https://github.com/cryptobiu/MPC-Benchmark. Some of these files were modified.  
