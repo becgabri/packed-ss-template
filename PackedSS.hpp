@@ -67,15 +67,11 @@ public:
         void computeN(vector<ZZ_p>& coeffs, int);
         void InvDFT(vector<ZZ_p>& sample_pts, int pow_u, int end);
         void polyMult(vector<ZZ_p>& a, vector<ZZ_p>& b);
-        std::pair<vector<ZZ_p>,vector<ZZ_p>> polyDiv(vector<ZZ_p>& a, vector<ZZ_p>& b); // a / b
         void prepareCoeffs(vector<ZZ_p>& coeffs, int pow_u);
 
 private:
         void reverse_add(int& itr,int pow);
-        //vector<FieldType> DFT(vector<FieldType>& coeffs);
-        //vector<FieldType> InvDFT(vector<FieldType>& sample_pts, vector<int>& coeff_pos);
         vector<ZZ_p> multPolyList(vector<vector<ZZ_p>>& polys);
-        //vector<FieldType> polyMult(vector<FieldType>& a, vector<FieldType>& b);
     
 };
 
