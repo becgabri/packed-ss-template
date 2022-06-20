@@ -57,9 +57,9 @@ public:
         vector<ZZ_p> ptToCoeff(vector<ZZ_p>&, int, bool);
         vector<ZZ_p> multiplyRoots(vector<int>& root_pos);
         void setSecrets(vector<ZZ_p>& lsecrets);
-	    void generateRandomSecrets();
-	    void generateRandomDupSecret();
-	    ZZ_p& operator[](int idx);
+	void generateRandomSecrets();
+	void generateRandomDupSecret();
+	ZZ_p& operator[](int idx);
 
         void DFT(vector<ZZ_p>& coeffs, int pow_u);
         void DFT(vector<ZZ_p>& coeffs, int pow_u, int beg, int end);
@@ -150,7 +150,6 @@ vector<ZZ_p> OptimizedPSS::ptToCoeff(vector<ZZ_p>& samplePoints,int pow_u, bool 
         for (int i = 0; i < d+1; i++) {
             n_i.push_back(move(samplePoints[i]));
             n_i[i] *= A_pts_share[i];
-            //n_i.push_back(samplePoints[i] * A_pts_share[i]);
         } 
     } else {
         
@@ -547,12 +546,10 @@ void OptimizedPSS::DFT(vector<ZZ_p>& coeffs, int pow_u) {
             while (base < order_gr) { 
                 // pair spots are step apart 
                 // j*jmp +k,  +k + step
-                //x = coeffs[base];
                 y = factor * coeffs[base+step]; 
                 // update coefficients
                 coeffs[base+step] = coeffs[base] - y;
                 coeffs[base] += y;
-                //coeffs[base+step] = x - y;
                 base += jmp;
            }
            factor = factor * stride;
@@ -674,9 +671,9 @@ private:
 	//FieldType& operator[](int idx);
 
 public:
-	PackedSecretShare(int l, int t, int n, HIM<FieldType> *mtx, TemplateField<FieldType>* fieldType);
+	PackedSecretShare(int l, int d, int n, HIM<FieldType> *mtx, TemplateField<FieldType>* fieldType);
 	int l;
-	int t; // expected that this is the NEW threshold of tolerated bad actors 
+	int d;  
 	int n;
 	FieldType myShare;
 
@@ -696,17 +693,6 @@ public:
 	void generateRandomSecrets();
 	void generateRandomDupSecret();
 	void setSecrets(const vector<FieldType>& secret_vals);
-
-	//friend void ProtocolParty<FieldType>::produceLeftRight(struct ProtocolParty<FieldType>::RandomBlock& rand, 
-	//				vector<PackedSecretShare>& lIn,
-	//				vector<PackedSecretShare>& rIn,
-	//				OrderCBlock* cblock, OrderCWireConfig* config);
-	//friend void ProtocolParty<FieldType>::leaderComp(vector<vector<FieldType>>& leaderElts, 
-    //    vector<vector<FieldType>>& recvElements, int i); 
-	/*
-	friend void ProtocolParty<FieldType>::pack(RandomBlock& currentRand,
- 				string valsToUnpack, vector<vector<FieldType>>& dest);
-	*/
 };
 
 template<class FieldType>
@@ -763,10 +749,8 @@ void PackedSecretShare<FieldType>::setSecrets(const vector<FieldType>& secret_va
 	}
 }
 
-// t here is assumed to be the UPDATED security parameter -- that is
-// its what we can tolerate given the fact that we are using packed ss?
 template<class FieldType>
-PackedSecretShare<FieldType>::PackedSecretShare(int l, int t, int n, HIM<FieldType> *mtx, TemplateField<FieldType>* fieldType): l(l), t(t), n(n) {
+PackedSecretShare<FieldType>::PackedSecretShare(int l, int d, int n, HIM<FieldType> *mtx, TemplateField<FieldType>* fieldType): l(l), d(d), n(n) {
 	field = fieldType;	
 	recoverMTX = mtx;
 }
@@ -784,28 +768,24 @@ vector<FieldType> PackedSecretShare<FieldType>::recoverSS(vector<FieldType> allP
 	}
 	*/
 	vector<FieldType> samplePoints;
-	samplePoints.resize(t+1);
+	samplePoints.resize(d+1);
 
-	for (int i = 0; i < t+1; i++)  {
+	for (int i = 0; i < d+1; i++)  {
 		samplePoints[i] = allPoints[i];
 	}
 
 	
 	vector<FieldType> recoverPts;
 	// not sure if this is needed or not
-	recoverPts.resize(n-(t+1)+l);
+	recoverPts.resize(n-(d+1)+l);
 	recoverMTX->MatrixMult(samplePoints, recoverPts);
 	// check consistency
-	// poly deg is actually T+(l-1) = 4+2= 6
-	// there are 10 pts, you need 7 to recover you *COULD* actually
-	// test the other 10-7 points
 
-	for (int j = 0; j < numPoints-(t+1); j++) {
-		if (recoverPts[l+j] != allPoints[1+t+j]) {
-			// 9 
-			cout << "Party " << to_string(1+t+j) << " is cheating!" << endl;
+	for (int j = 0; j < numPoints-(d+1); j++) {
+		if (recoverPts[l+j] != allPoints[1+d+j]) {
+			cout << "Party " << to_string(1+d+j) << " is cheating!" << endl;
 			cout << "Recovered point: " << recoverPts[l+j] << endl;
-			cout << "Point provided: " << allPoints[1+t+j]<< endl;
+			cout << "Point provided: " << allPoints[1+d+j]<< endl;
 			exit(1);
 		}
 	}
@@ -819,7 +799,7 @@ template<class FieldType>
 vector<FieldType> PackedSecretShare<FieldType>::secretShareValues(HIM<FieldType>* packSS) {
 	vector<FieldType> yValues;
 
-	for (int i = 0; i < t+1; i++) {
+	for (int i = 0; i < d+1; i++) {
 		if (i < l && secrets.size()>i) {
 			yValues.push_back(secrets[i]); 
 		} else if (i < l){
@@ -830,7 +810,7 @@ vector<FieldType> PackedSecretShare<FieldType>::secretShareValues(HIM<FieldType>
 	} 
 
 	vector<FieldType> lastsharePts;
-	lastsharePts.resize(n-(t+1)+l);
+	lastsharePts.resize(n-(d+1)+l);
 	packSS->MatrixMult(yValues, lastsharePts);
 
 	vector<FieldType> allSharePts;

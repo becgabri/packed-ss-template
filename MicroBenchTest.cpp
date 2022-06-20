@@ -24,7 +24,7 @@ int main() {
     auto d = t + 2*l -1;
     auto num_parties = 100;//500;//100;
     OptimizedPSS pss1(l,d,num_parties, field_size, &tempField);
-    /*             
+                 
     int nearest_pow = ceil(log2(num_parties+l));
     vector<ZZ_p> alpha_roots;
     alpha_roots.reserve(d+1);
@@ -56,41 +56,41 @@ int main() {
     shareMtx.allocate(num_parties-(d+1-l),d+1, &tempField);
     shareMtx.InitHIMByVectors(secret_roots, eval_pts);
     PackedSecretShare<ZZ_p> reg_pss1(l,d,num_parties, &recoverMtx,&tempField);
-    */
+    
     vector<ZZ_p> sec; 
     for (int j = 0; j < l; j++) {
         auto secret_pt = tempField.Random();
         sec.push_back(secret_pt);
     }
     pss1.setSecrets(sec);
-    //reg_pss1.setSecrets(sec);
+    reg_pss1.setSecrets(sec);
     int NUM_REPEATS = 10000;
-    //vector<nanoseconds> avg_reg_time(NUM_REPEATS);
+    vector<nanoseconds> avg_reg_time(NUM_REPEATS);
     vector<nanoseconds> avg_opt_time(NUM_REPEATS); 
     for (int i = 0; i < NUM_REPEATS; i++) {
-       /*      
+             
        steady_clock::time_point reg_start = steady_clock::now();
        reg_pss1.secretShareValues(&shareMtx);
        steady_clock::time_point reg_end = steady_clock::now();
        avg_reg_time[i] = duration_cast<nanoseconds>(reg_end-reg_start);
-       */
+       
        steady_clock::time_point opt_start = steady_clock::now();
        pss1.secretShareValues();
        steady_clock::time_point opt_end = steady_clock::now();
        avg_opt_time[i] = duration_cast<nanoseconds>(opt_end-opt_start);
     
     }
-    //nanoseconds avg_reg(0);
+    nanoseconds avg_reg(0);
     nanoseconds avg_opt(0);
     for ( int j = 0; j < NUM_REPEATS; j++) {
-        //avg_reg += avg_reg_time[j];
+        avg_reg += avg_reg_time[j];
         avg_opt += avg_opt_time[j];
     }
     // do a sort 
-    //sort(avg_reg_time.begin(), avg_reg_time.end());
+    sort(avg_reg_time.begin(), avg_reg_time.end());
     sort(avg_opt_time.begin(), avg_opt_time.end());
-    // cout << "Avg reg. time: " << avg_reg.count()/NUM_REPEATS << endl;
+    cout << "Avg reg. time: " << avg_reg.count()/NUM_REPEATS << endl;
     cout << "Avg opt. time: " << avg_opt.count()/NUM_REPEATS << endl;
-    //cout << "Median reg. time: " << avg_reg_time[NUM_REPEATS/2].count() << endl;
+    cout << "Median reg. time: " << avg_reg_time[NUM_REPEATS/2].count() << endl;
     cout << "Median opt. time: " << avg_opt_time[NUM_REPEATS / 2].count() << endl;
 }
