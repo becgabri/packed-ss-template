@@ -1,3 +1,6 @@
+// becgabri (6/19/2022)
+
+
 #include "PackedSS.hpp"
 #include "TemplateField.h"
 #include "testVDM.hpp"
@@ -13,7 +16,6 @@ using namespace std;
 
 int main() {
     srand(time(0)); // this is just used for testing 
-    // stealing the example of https://arxiv.org/pdf/0907.1788.pdf
     long field_size = 3193032821761;
     TemplateField<ZZ_p> tempField(field_size);
     auto l = 12;//2;//1;
