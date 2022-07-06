@@ -444,33 +444,10 @@ void OptimizedPSS::computeN(vector<ZZ_p>& coeffs, int pow_u) {
     return;    
 }
 
-// again from Mathieu Poumeyrol
-// to undo this ordering, just do it twice  
 void OptimizedPSS::prepareCoeffs(vector<ZZ_p>& coeffs, int pow_u) {
     auto zero = fieldType->GetElement(0);
     int total = 1 << pow_u; // 2^j
     coeffs.resize(total, zero);
-    /*
-    for (int i = 1; i < nearest_pow+1; i++) {
-        // always fix 2^j-i to be 1 
-        for (int j = 0; j < (1<< (i-1)); j++) {
-            auto elt = 1 << (nearest_pow - i); 
-            for (int k = 0; k < i-1; k++) {
-                auto bit_mask = (j >> k) & 1;
-                if (bit_mask == 1) {
-                    elt = elt + (1 << (nearest_pow-1-k));
-                }
-            }
-            // do swap 
-            auto this_pos = (1 << (i-1)) + j;
-            auto save = coeffs[this_pos];
-            if (this_pos < elt) {
-                coeffs[this_pos] = coeffs[elt];
-                coeffs[elt] = save;
-            }
-        }
-    }
-    */
     return;
 }
 
