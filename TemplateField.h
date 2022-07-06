@@ -5,6 +5,7 @@
 #ifndef SECRET_SHARING_TEMPLATEFIELD_H
 #define SECRET_SHARING_TEMPLATEFIELD_H
 
+#include "./libscapi_utils/include/primitives/Mersenne.hpp"
 #include <stdint.h>
 #include <bitset>
 #include <sstream>

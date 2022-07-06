@@ -3,9 +3,9 @@
 #ifndef PACKEDSS_H
 #define PACKEDSS_H
 
-#include <libscapi/include/primitives/Mersenne.hpp>
-#include <libscapi/include/primitives/Matrix.hpp>
-#include <libscapi/include/infra/Common.hpp>
+#include "./libscapi_utils/include/primitives/Mersenne.hpp"
+#include "./libscapi_utils/include/primitives/Matrix.hpp"
+#include "./libscapi_utils/include/infra/Common.hpp"
 #include <iostream>
 #include <cmath>
 #include <string>

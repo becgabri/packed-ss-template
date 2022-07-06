@@ -3,9 +3,8 @@
 
 #include "PackedSS.hpp"
 #include "TemplateField.h"
-#include "testVDM.hpp"
-#include <libscapi/include/primitives/Mersenne.hpp>
-#include <libscapi/include/primitives/Matrix.hpp>
+#include "libscapi_utils/include/primitives/Mersenne.hpp"
+#include "libscapi_utils/include/primitives/Matrix.hpp"
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -90,7 +89,7 @@ int main() {
     printCV(coeff);
     pss1.DFT(coeff, nearest_pow); // a(1) ... a(2^j)
     // VDM matrix 
-    NVDM<ZZ_p> vdm_test(num_parties,test_deg,&tempField);
+    VDM<ZZ_p> vdm_test(num_parties,test_deg,&tempField);
     // need to do what was done earlier 
     vector<ZZ_p> vdm_roots; 
     for (int i = 0 ; i < num_parties; i++) {

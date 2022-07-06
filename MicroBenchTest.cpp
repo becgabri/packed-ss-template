@@ -3,8 +3,8 @@
 #include "PackedSS.hpp"
 #include "TemplateField.h"
 #include "testVDM.hpp"
-#include <libscapi/include/primitives/Mersenne.hpp>
-#include <libscapi/include/primitives/Matrix.hpp>
+#include "libscapi_utils/include/primitives/Mersenne.hpp"
+#include "libscapi_utils/include/primitives/Matrix.hpp"
 #include <vector>
 #include <iostream>
 #include <cmath>
@@ -48,8 +48,8 @@ int main() {
     secret_roots.erase(secret_roots.begin()+l, secret_roots.end());
     secret_roots.insert(secret_roots.end(), alpha_roots.begin(), alpha_roots.begin()+(d+1)-l);
     vector<ZZ_p> eval_pts;
-    eval_pts.reserve(num_parties-(d+1)-l);
-    for (int i = 0; i < num_parties-(d+1)-l; i++) {
+    eval_pts.reserve(num_parties-(d+1)+l);
+    for (int i = 0; i < num_parties-(d+1)+l; i++) {
         eval_pts.push_back(power(root, d+1+ i));
     }
     HIM<ZZ_p> shareMtx;

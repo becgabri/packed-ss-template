@@ -3,7 +3,6 @@
 //
 
 #include "TemplateField.h"
-#include "ZpKaratsubaElement.h"
 
 
 using namespace NTL;
@@ -23,20 +22,6 @@ TemplateField<ZZ_p>::TemplateField(long fieldParam) {
     m_ZERO = new ZZ_p(0);
     m_ONE = new ZZ_p(1);
 }
-
-template <>
-TemplateField<ZpKaratsubaElement>::TemplateField(long fieldParam) {
-
-    this->elementSizeInBytes = 5;//round up to the next byte
-    this->elementSizeInBits = 40;
-
-    auto randomKey = prg.generateKey(128);
-    prg.setKey(randomKey);
-
-    m_ZERO = new ZpKaratsubaElement(0);
-    m_ONE = new ZpKaratsubaElement(1);
-}
-
 
 /*
  * The i-th field element. The ordering is arbitrary, *except* that
@@ -63,27 +48,6 @@ GF2E TemplateField<GF2E>::GetElement(long b) {
 
     return to_GF2E(element);
 }
-
-template <>
-ZpKaratsubaElement TemplateField<ZpKaratsubaElement>::GetElement(long b) {
-
-
-    if(b == 1)
-    {
-        return *m_ONE;
-    }
-    if(b == 0)
-    {
-        return *m_ZERO;
-    }
-    else{
-        ZpKaratsubaElement element(b);
-        return element;
-    }
-}
-
-
-
 
 template <>
 ZZ_p TemplateField<ZZ_p>::GetElement(long b) {
@@ -132,25 +96,6 @@ void TemplateField<GF2E>::elementToBytes(unsigned char* elemenetInBytes, GF2E& e
 
     BytesFromGF2X(elemenetInBytes,rep(element),fieldParam/8);
 }
-
-
-template <>
-void TemplateField<ZpKaratsubaElement>::elementToBytes(unsigned char* elemenetInBytes, ZpKaratsubaElement& element){
-
-    memcpy(elemenetInBytes, (byte*)(&element.elem), 5);
-}
-
-template <>
-ZpKaratsubaElement TemplateField<ZpKaratsubaElement>::bytesToElement(unsigned char* elemenetInBytes){
-
-    long elemVal = 0;
-
-    //copy the 5 bytes to a long element
-    memcpy((byte*)&elemVal, elemenetInBytes, 5);
-
-    return ZpKaratsubaElement(elemVal);
-}
-
 
 template <>
 GF2E TemplateField<GF2E>::bytesToElement(unsigned char* elemenetInBytes){
