@@ -4,12 +4,16 @@ A repository for two basic packed secret sharing implementations. This is very m
 Some of the code provided here comes directly or with small modifications from [libscapi](https://github.com/cryptobiu/libscapi). See the LICENSES directory for more details.
 
 ## Dependencies
-To run this code you will need a working version of openssl, boost and [ntl](https://libntl.org/). Depending on your OS you may also need to install [GMP](https://libntl.org/doc/tour-gmp.html).
+To run this code you will need a working version of [openssl](https://www.openssl.org/source/), [boost](https://www.boost.org/doc/libs/1_71_0/more/getting_started/unix-variants.html)(works with at least 1.71.0) and [ntl](https://libntl.org/download.html)(version >=11.0.0). Depending on your OS you may also need to install [GMP](https://gmplib.org/). You will also need [CMake](https://cmake.org/download/) with a version >=3.20.  
+
 
 ## Build Instructions 
 After ensuring you have installed the necessary dependencies: 
 
 ```
+// for a linux/unix system using apt for package management
+sudo apt-get update
+sudo apt-get install zlib1g-dev libgmp-dev
 git clone https://github.com/becgabri/packed-ss-template.git
 cd packed-ss-template
 cmake .
