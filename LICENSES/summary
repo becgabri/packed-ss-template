@@ -4,4 +4,6 @@ All files in the directory /libscapi_utils were taken from the libscapi repo own
 
 HOMENC HElib
 
-The cmake file FindNTL.cmake was taken from the repository at https://github.com/homenc/HElib. It was modified to populate a variable for the NTL include directory. The code snippet containing the modified portion has been marked.  
+The cmake file FindNTL.cmake was taken from the repository at https://github.com/homenc/HElib. It was modified to populate a variable for the NTL include directory. The code snippet containing the modified portion has been marked. 
+
+The file ./cmake/FindGMP.cmake is from Jack Poulson and is distributed under a BSD license. See file for slightly more details.  

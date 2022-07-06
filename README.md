@@ -24,4 +24,4 @@ make
 ## Other Info
 There's some discussion about MPC, what packed secret sharing is, and the implementation itself in the [pdf](https://github.com/becgabri/packed-ss-template/blob/main/PackedSecretShareDoc.pdf) located in this repo. It also contains other resources that may be helpful. 
 
-The two programs built are simply one to do benchmarking and then another that does testing. In an ideal world, the testing would be done with a c++ test runner like google test or boost. However, as it's just a template, I've decided to leave it the way it is.  
+The two programs built are simply one to do benchmarking (called MicroBench) and then another that does testing (called PackedSSTest). In an ideal world, the testing would be done with a c++ test runner like google test or boost. However, as it's just a template, I've decided to leave it the way it is.  
