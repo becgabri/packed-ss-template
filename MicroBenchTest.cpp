@@ -2,7 +2,6 @@
 
 #include "PackedSS.hpp"
 #include "TemplateField.h"
-#include "testVDM.hpp"
 #include "libscapi_utils/include/primitives/Mersenne.hpp"
 #include "libscapi_utils/include/primitives/Matrix.hpp"
 #include <vector>

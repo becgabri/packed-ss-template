@@ -1,1 +1,7 @@
-All files in the directory /libscapi_utils were taken from the libscapi repo owned by the Bar-Ilan crypto group. The files TemplateField.{h,cpp} come from https://github.com/cryptobiu/MPC-Benchmark. Some of these files were modified.  
+CRYPTO BIU
+
+All files in the directory /libscapi_utils were taken from the libscapi repo owned by the Bar-Ilan crypto group. The files TemplateField.{h,cpp} come from https://github.com/cryptobiu/MPC-Benchmark. Some of these files were modified. 
+
+HOMENC HElib
+
+The cmake file FindNTL.cmake was taken from the repository at https://github.com/homenc/HElib. It was modified to populate a variable for the NTL include directory. The code snippet containing the modified portion has been marked.  

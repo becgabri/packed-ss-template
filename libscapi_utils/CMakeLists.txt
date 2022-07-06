@@ -4,5 +4,6 @@ file(GLOB_RECURSE OTHER_HEADERS "*.h")
 file(GLOB_RECURSE CPP "*.cpp")
 
 add_library(libscapi_utils ${SOME_HEADERS} ${OTHER_HEADERS} ${CPP})
-target_include_directories(libscapi_utils PUBLIC $ENV{HOME}/ntl/include)
-target_link_libraries(libscapi_utils OpenSSL::Crypto ${NTLBUILD})
+# https://stackoverflow.com/questions/20746936/what-use-is-find-package-when-you-need-to-specify-cmake-module-path
+#target_include_directories(libscapi_utils PUBLIC ${NTL_INCLUDE_DIR})
+target_link_libraries(libscapi_utils OpenSSL::Crypto ${NTL_LIB})

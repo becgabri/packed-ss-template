@@ -4,7 +4,7 @@ A repository for two basic packed secret sharing implementations. This is very m
 Some of the code provided here comes directly or with small modifications from [libscapi](https://github.com/cryptobiu/libscapi). See the LICENSES directory for more details.
 
 ## Dependencies
-To run this code you will need a working version of openssl, boost and [ntl](https://libntl.org/). You may need to change the CMakeLists.txt file to reflect where you have installed ntl and depending on your OS you may also need to install [GMP](https://libntl.org/doc/tour-gmp.html).
+To run this code you will need a working version of openssl, boost and [ntl](https://libntl.org/). Depending on your OS you may also need to install [GMP](https://libntl.org/doc/tour-gmp.html).
 
 ## Build Instructions 
 After ensuring you have installed the necessary dependencies: 
